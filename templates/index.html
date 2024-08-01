@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  <title>Task Smash</title>
+{% endblock %}
+
+{% block body %}
+  <div class="content">
+    <h1>Flask To-Do</h1>
+
+    <form action="/" method="POST">
+      <input type="text" name="description" id="description" />
+      <input type="submit" value="Agregar Tarea" id="btn_add" />
+    </form>
+
+    {% if tasks|length < 1 %}
+      <h3>No hay tareas pendientes... Agrega una ahora!</h3>
+    {% else %}
+      <table>
+        <tr>
+          <th>Descripción</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+        {% for task in tasks %}
+          <tr>
+            <td>{{ task.description }}</td>
+            <td>{{ task.created_at.strftime('%d-%m-%Y') }}</td>
+            <td>
+              <a href="/delete/{{ task.id }}">Eliminar</a>
+              <a href="/edit/{{ task.id }}">Editar</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% endif %}
+  </div>
+{% endblock %}
